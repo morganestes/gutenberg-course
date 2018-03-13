@@ -18,7 +18,9 @@
   ],
   "env": {
     "default": {
-      "plugins": ["transform-runtime"]
+      "plugins": [
+        "transform-runtime"
+      ]
     }
   }
 }
