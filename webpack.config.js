@@ -64,12 +64,12 @@ module.exports = {
   plugins: [
     blocksCSSPlugin,
     editBlocksCSSPlugin,
-    // new BrowserSyncPlugin({
-    //   // Load localhost:3333 to view proxied site
-    //   host: 'localhost',
-    //   port: '3333',
-    //   // Change proxy to your local WordPress URL
-    //   proxy: 'https://gutenberg.local'
-    // })
+    new BrowserSyncPlugin({
+      // Load localhost:3333 to view proxied site
+      host: 'localhost',
+      port: '3333',
+      // Change proxy to your local WordPress URL
+      proxy: 'https://gutenberg.test'
+    })
   ],
 };
