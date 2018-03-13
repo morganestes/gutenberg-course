@@ -12,6 +12,14 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * Filter args for post types.
+ *
+ * @param array  $args      Post type args.
+ * @param string $post_type The post type.
+ *
+ * @return array The (maybe filtered) post type args.
+ */
 function jsforwpblocks_templates( $args, $post_type ) {
 
 	if ( 'post' === $post_type ) {
@@ -33,20 +41,18 @@ function jsforwpblocks_templates( $args, $post_type ) {
 	}
 
 	return $args;
-
 }
 
-// add_filter( 'register_post_type_args', 'jsforwpblocks_templates', 20, 2 );
+add_filter( 'register_post_type_args', 'jsforwpblocks_templates', 20, 2 );
+
 /**
- * Enqueue block editor only JavaScript and CSS
+ * Enqueue block editor only JavaScript and CSS.
  */
 function jsforwpblocks_editor_scripts() {
-
-	// Make paths variables so we don't write em twice ;)
-	$block_path       = '/assets/js/editor.blocks.js';
+	$block_path        = '/assets/js/editor.blocks.js';
 	$editor_style_path = '/assets/css/blocks.editor.css';
 
-	// Enqueue the bundled block JS file
+	// Enqueue the bundled block JS file.
 	wp_enqueue_script(
 		'jsforwp-blocks-js',
 		plugins_url( $block_path, __FILE__ ),
@@ -54,7 +60,7 @@ function jsforwpblocks_editor_scripts() {
 		filemtime( plugin_dir_path( __FILE__ ) . $block_path )
 	);
 
-	// Pass in REST URL
+	// Pass in REST URL.
 	wp_localize_script(
 		'jsforwp-blocks-js',
 		'jsforwp_globals',
@@ -63,7 +69,7 @@ function jsforwpblocks_editor_scripts() {
 		]
 	);
 
-	// Enqueue optional editor only styles
+	// Enqueue optional editor-only styles.
 	wp_enqueue_style(
 		'jsforwp-blocks-editor-css',
 		plugins_url( $editor_style_path, __FILE__ ),
@@ -73,19 +79,18 @@ function jsforwpblocks_editor_scripts() {
 
 }
 
-// Hook scripts function into block editor hook
+// Hook scripts function into block editor hook.
 add_action( 'enqueue_block_editor_assets', 'jsforwpblocks_editor_scripts' );
 
 
 /**
- * Enqueue front end and editor JavaScript and CSS
+ * Enqueue front end and editor JavaScript and CSS.
  */
 function jsforwpblocks_scripts() {
 	$block_path = '/assets/js/frontend.blocks.js';
-	// Make paths variables so we don't write em twice ;)
 	$style_path = '/assets/css/blocks.style.css';
 
-	// Enqueue the bundled block JS file
+	// Enqueue the bundled block JS file.
 	wp_enqueue_script(
 		'jsforwp-blocks-frontend-js',
 		plugins_url( $block_path, __FILE__ ),
@@ -93,7 +98,7 @@ function jsforwpblocks_scripts() {
 		filemtime( plugin_dir_path( __FILE__ ) . $block_path )
 	);
 
-	// Enqueue frontend and editor block styles
+	// Enqueue frontend and editor block styles.
 	wp_enqueue_style(
 		'jsforwp-blocks-css',
 		plugins_url( $style_path, __FILE__ ),
@@ -103,12 +108,15 @@ function jsforwpblocks_scripts() {
 
 }
 
-// Hook scripts function into block editor hook
+// Hook scripts function into block editor hook.
 add_action( 'enqueue_block_assets', 'jsforwpblocks_scripts' );
 
-
 /**
- * Server rendering for /blocks/examples/12-dynamic
+ * Server rendering for /blocks/examples/12-dynamic.
+ *
+ * @param array $attributes The block attributes.
+ *
+ * @return string The block markup.
  */
 function jsforwp_dynamic_block_render( $attributes ) {
 
@@ -132,7 +140,7 @@ function jsforwp_dynamic_block_render( $attributes ) {
 
 }
 
-// Hook server side rendering into render callback
+// Hook server side rendering into render callback.
 register_block_type(
 	'jsforwp/dynamic', [
 		'render_callback' => 'jsforwp_dynamic_block_render',
@@ -141,7 +149,11 @@ register_block_type(
 
 
 /**
- * Server rendering for /blocks/examples/13-dynamic-lat
+ * Server rendering for /blocks/examples/13-dynamic-lat.
+ *
+ * @param array $attributes The block attributes.
+ *
+ * @return string The block markup.
  */
 function jsforwp_dynamic_alt_block_render( $attributes ) {
 
@@ -170,7 +182,7 @@ function jsforwp_dynamic_alt_block_render( $attributes ) {
 	return $markup;
 }
 
-// Hook server side rendering into render callback
+// Hook server side rendering into render callback.
 register_block_type(
 	'jsforwp/dynamic-alt', [
 		'render_callback' => 'jsforwp_dynamic_alt_block_render',
