@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || exit;
 
 function jsforwpblocks_templates( $args, $post_type ) {
 
-	if ( $post_type == 'post' ) {
+	if ( 'post' === $post_type ) {
 		$args['template_lock'] = true;
 		$args['template']      = [
 			[
@@ -43,15 +43,15 @@ function jsforwpblocks_templates( $args, $post_type ) {
 function jsforwpblocks_editor_scripts() {
 
 	// Make paths variables so we don't write em twice ;)
-	$blockPath       = '/assets/js/editor.blocks.js';
-	$editorStylePath = '/assets/css/blocks.editor.css';
+	$block_path       = '/assets/js/editor.blocks.js';
+	$editor_style_path = '/assets/css/blocks.editor.css';
 
 	// Enqueue the bundled block JS file
 	wp_enqueue_script(
 		'jsforwp-blocks-js',
-		plugins_url( $blockPath, __FILE__ ),
+		plugins_url( $block_path, __FILE__ ),
 		[ 'wp-i18n', 'wp-element', 'wp-blocks', 'wp-components', 'wp-api' ],
-		filemtime( plugin_dir_path( __FILE__ ) . $blockPath )
+		filemtime( plugin_dir_path( __FILE__ ) . $block_path )
 	);
 
 	// Pass in REST URL
@@ -66,9 +66,9 @@ function jsforwpblocks_editor_scripts() {
 	// Enqueue optional editor only styles
 	wp_enqueue_style(
 		'jsforwp-blocks-editor-css',
-		plugins_url( $editorStylePath, __FILE__ ),
+		plugins_url( $editor_style_path, __FILE__ ),
 		[ 'wp-blocks' ],
-		filemtime( plugin_dir_path( __FILE__ ) . $editorStylePath )
+		filemtime( plugin_dir_path( __FILE__ ) . $editor_style_path )
 	);
 
 }
@@ -81,24 +81,24 @@ add_action( 'enqueue_block_editor_assets', 'jsforwpblocks_editor_scripts' );
  * Enqueue front end and editor JavaScript and CSS
  */
 function jsforwpblocks_scripts() {
-	$blockPath = '/assets/js/frontend.blocks.js';
+	$block_path = '/assets/js/frontend.blocks.js';
 	// Make paths variables so we don't write em twice ;)
-	$stylePath = '/assets/css/blocks.style.css';
+	$style_path = '/assets/css/blocks.style.css';
 
 	// Enqueue the bundled block JS file
 	wp_enqueue_script(
 		'jsforwp-blocks-frontend-js',
-		plugins_url( $blockPath, __FILE__ ),
+		plugins_url( $block_path, __FILE__ ),
 		[ 'wp-i18n', 'wp-element', 'wp-blocks', 'wp-components', 'wp-api' ],
-		filemtime( plugin_dir_path( __FILE__ ) . $blockPath )
+		filemtime( plugin_dir_path( __FILE__ ) . $block_path )
 	);
 
 	// Enqueue frontend and editor block styles
 	wp_enqueue_style(
 		'jsforwp-blocks-css',
-		plugins_url( $stylePath, __FILE__ ),
+		plugins_url( $style_path, __FILE__ ),
 		[ 'wp-blocks' ],
-		filemtime( plugin_dir_path( __FILE__ ) . $stylePath )
+		filemtime( plugin_dir_path( __FILE__ ) . $style_path )
 	);
 
 }
